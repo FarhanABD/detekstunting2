@@ -1,0 +1,295 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Body */
+body {
+    background: linear-gradient(to right, #3d4917, #b8860b);
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0); /* Tetap transparan */
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+.logo1 {
+    display: flex;
+    align-items: center;
+    margin-left: 20px; /* Geser logo ke kiri */
+}
+
+.logo1 img {
+    height: 40px; /* Sesuaikan ukuran */
+    max-width: 100%;
+}
+
+.nav-menu a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: white;
+    transition: 0.3s;
+}
+
+.nav-menu a:hover {
+    color: orange;
+}
+
+/* Hero Section */
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 100px 50px;
+    text-align: left;
+    position: relative;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.top-text {
+    color: orange;
+    font-weight: bold;
+}
+
+.big-title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.desc {
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.btn-primary {
+    background: orange;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: darkorange;
+}
+
+.btn-secondary {
+    border: 2px solid white;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: white;
+    color: black;
+}
+
+/* Hero Image */
+.hero-img {
+    max-width: 400px;
+    animation: slideIn 1s ease-in-out;
+}
+
+/* Footer */
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    background: rgba(0, 0, 0, 0); /* Transparan */
+    backdrop-filter: blur(5px);
+}
+
+.scrollable-section {
+    text-align: center;
+    padding: 50px 20px;
+    background: linear-gradient(to right, #3d4917, #b8860b);
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.scrollable-section.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: white;
+    text-align: center;
+}
+
+.scroll-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: max-content;
+}
+.scroll-wrapper {
+    overflow: hidden;
+    width: 660px; /* 3 item masing-masing 220px */
+    margin: auto;
+    position: relative;
+}
+
+.scroll-item {
+    flex: 0 0 220px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0 10px;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.scroll-item img {
+    width: 80px; /* Ubah ukuran gambar */
+    height: auto;
+}
+
+.scroll-item.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.scroll-item:hover {
+    transform: scale(1.1);
+}
+
+/* Efek animasi saat muncul */
+.hidden {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 2s ease-out, transform 2s ease-out;
+}
+
+/* Saat elemen muncul */
+.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.user-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 120px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    right: 0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.user-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-img {
+        max-width: 300px;
+    }
+
+    .nav-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .nav-menu a {
+        display: block;
+    }
+}
