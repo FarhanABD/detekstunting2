@@ -9,10 +9,22 @@ use Illuminate\Support\Facades\Hash;
 
 class PenggunaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pengguna = User::all();
-        return view('admin.users.user',compact('pengguna'));
+        // Ambil jumlah data per halaman dari dropdown (default 5)
+        $perPage = $request->input('per_page', 5);
+    
+        // Ambil data terbaru setiap user berdasarkan created_at (hanya 1 per user)
+        $hasilUser = User::select('users.*')
+            ->whereIn('id', function ($query) {
+                $query->selectRaw('MAX(id)')
+                      ->from('users')
+                      ->groupBy('id');
+            })
+            ->orderBy('id', 'asc') // Urutkan dari yang terbaru
+            ->paginate($perPage);
+    
+        return view('admin.users.user', compact('hasilUser', 'perPage'));
     }
 
     public function reset(string $id)
@@ -51,7 +63,7 @@ class PenggunaController extends Controller
     $pengguna->save();
 
     // return view('admin.users.user',compact('pengguna'));
-    return redirect()->back();
+    return view('admin.users.tambah_user');
 }
 
 

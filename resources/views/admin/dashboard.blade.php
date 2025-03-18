@@ -35,7 +35,7 @@ $result = $conn->query($sql);
         @if (Auth::check())
         <div class="user-dropdown">
             <button class="btn btn-secondary" style="background-color: orange; color: white; border: 2px solid orange; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-                {{ Auth::user()->name }} ▼
+                {{ Auth::user()->username }} ▼
             </button>
             <div class="dropdown-content">
                 <a href="{{ route('admin.profile.show', Auth::user()->id) }}">Profile</a>
@@ -101,7 +101,7 @@ $result = $conn->query($sql);
         @foreach ($artikels as $artikel )
         <div class="scroll-item">
             {{-- <a href="artikel.php?id=<?= $row['id'] ?>"> --}}
-                    <img src="{{ asset('storage/' . $artikel->gambar) }}" alt="{{ $artikel->judul }}">
+                    <img src="{{ asset('storage/images' . $artikel->gambar) }}" alt="{{ $artikel->judul }}">
                     <p>{{ $artikel->judul }}</p>
                     <span>{{ $artikel->deskripsi }}<span>
                 </a>

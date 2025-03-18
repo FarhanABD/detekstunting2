@@ -29,14 +29,14 @@ $result = $conn->query($sql);
         <a href="#main">Beranda</a>
         <a href="{{ route('user.deteksi.index') }}">Deteksi Stunting</a>
         <a href="{{ route('user.deteksi.show', Auth::user()->id) }}">Riwayat Deteksi</a>
-        <a href="{{ route('user.artikel', ['id' => $berita->id]) }}">Artikel</a>
+        <a href="{{ route('user.artikel.showUser', $berita->id) }}">Artikel</a>
 
 
         @if (Auth::check())
             <div class="user-dropdown">
-            <button class="btn btn-secondary" style="background-color: orange; color: white; border: 2px solid orange; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-                {{ Auth::user()->nama_lengkap }} ▼
-            </button>
+                <button class="btn btn-secondary" style="background-color: orange; color: white; border: 2px solid orange; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+                    {{ Auth::user()->username }}  ▼
+                </button>
             <div class="dropdown-content">
                 <a href="{{ route('user.profile.show', Auth::user()->id) }}">Profile</a>
                 <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
@@ -58,10 +58,10 @@ $result = $conn->query($sql);
         @if (Auth::check())
         <div class="hero-content">
             <p class="top-text">#MARI DETEKSI DAN CEGAH STUNTING</p>
-            <h2 class="big-title">SELAMAT DATANG <br> Mom    {{ Auth::user()->name }} ▼</h2>
+            <h2 class="big-title">SELAMAT DATANG <br> Mom    {{ Auth::user()->nama_lengkap }}</h2>
             <p class="desc">Lakukan deteksi Stunting secara cepat untuk mencegah buah hati kita dari ancaman Stunting</p>
             <div class="buttons">
-                <a href="detekdini.php" class="btn btn-primary">Deteksi Sekarang</a>
+                <a href="{{ route('user.deteksi.index') }}" class="btn btn-primary">Deteksi Sekarang</a>
                 <a href="#pengertian" class="btn btn-secondary">Pelajari Stunting</a>
             </div>
         </div>
@@ -96,8 +96,8 @@ $result = $conn->query($sql);
         <div class="scroll-container">
             @foreach ($artikels as $news )
             <div class="scroll-item">
-               <a href="">
-                   <img src="{{ asset('storage/' . $news->gambar) }}" alt="{{ $news->judul }}">
+                <a href="{{ route('user.artikel.showUser', $news->id) }}">
+                   <img src="{{ asset($news->gambar) }}" alt="{{ $news->judul }}">
                    <p>{{ $news->judul }}</p>
                    <span>{{ Str::limit($news->deskripsi, 100) }}...</span>
                </a>

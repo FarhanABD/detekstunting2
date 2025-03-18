@@ -3,15 +3,23 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ArtikelController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 
-Route::get('/', function () {
-    return view('admin.auth.login');
-});
+// Route::get('/', function () {
+//     return view('dashboard');
+// });
+Route::get('/', [AuthController::class, 'index'])->name('dashboard');
+Route::get('/artikel', [ArtikelController::class, 'indexUnlogin'])->name('artikel');
+Route::get('/artikel/{id}', [ArtikelController::class, 'showUnlogin'])->name('artikel.showUnlogin');
 
-// Route::get('/admin/login', [AuthenticatedSessionController::class, 'create'])->name('admin.auth.login');
+
+// Route::get('')
+
+Route::get('/admin/login', [AuthenticatedSessionController::class, 'create'])->name('admin.auth.login');
 
 
 // Route::get('/dashboard', function () {

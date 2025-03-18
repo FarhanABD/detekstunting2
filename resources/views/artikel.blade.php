@@ -93,36 +93,18 @@ $result = $conn->query($sql);
     </h1>
 
     <nav class="nav-menu">
-    <a href="{{ route('user.dashboard') }}">Beranda</a>
-        <a href="{{ route('user.deteksi.index') }}">Deteksi Stunting</a>
-        <a href="{{ route('user.deteksi.show', Auth::user()->id) }}">Riwayat Deteksi</a>
-        <a href="{{ route('user.dashboard') }}">Artikel</a>
-
-        @if (Auth::check())
-        <div class="user-dropdown">
-            <button class="btn btn-secondary" style="background-color: orange; color: white; border: 2px solid orange; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-                {{ Auth::user()->username }}  ▼
-            </button>
-        <div class="dropdown-content">
-            <a href="{{ route('user.profile.show', Auth::user()->id) }}">Profile</a>
-            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-        </div>
-        </div>
-        @else
-        <a href="login/index.php" class="btn btn-secondary">Login</a>
-    @endif
-    </nav>
+            <a href="{{ route('dashboard') }}">Beranda</a>
+            <a href="{{ route('admin.auth.login') }}">Deteksi Stunting</a>
+            <a href="#artikel">Artikel</a>
+            <a href="{{ route('admin.auth.login') }}" class="btn btn-secondary">Login</a>
+        </nav>
 </header>
 
     <!-- HERO SECTION -->
-   
     <section id="artikel" class="scrollable-section">
         <main class="artikel-container">
-            <h1 class="artikel-judul">{{ $artikel->judul }}</h1>
-            <p class="artikel-tanggal">Dipublikasikan pada: {{ $artikel->tanggal }}</p>            
+        <h1 class="artikel-judul">{{ $artikel->judul }}</h1>
+        <p class="artikel-tanggal">Dipublikasikan pada: {{ $artikel->tanggal }}</p>
         <img src="{{ asset($artikel->gambar) }}" alt="{{ $artikel->judul }}"  class="artikel-gambar">
         <article class="artikel-isi">
         <?php
@@ -148,7 +130,7 @@ $result = $conn->query($sql);
             <div class="scroll-container">
                 @foreach ($berita as $artikel )
                 <div class="scroll-item">
-                    <a href="{{ route('user.artikel.showUser', $artikel->id) }}">
+                    <a href="{{ route('artikel', $artikel->id) }}">
                         <img src="{{ asset($artikel->gambar) }}" alt="{{ $artikel->judul }}">
                             <p>{{ $artikel->judul }}</p>
                             <span>{{ Str::limit($artikel->deskripsi, 100) }}...</span>

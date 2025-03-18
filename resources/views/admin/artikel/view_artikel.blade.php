@@ -98,19 +98,22 @@ $result = $conn->query($sql);
         <a href="{{ route('admin.pengguna.index') }}">Kelola Akun Pengguna</a>
         <a href="{{ route('admin.artikel.index') }}">Kelola Artikel</a>
 
-        <?php if (isset($_SESSION['username'])): ?>
-            <div class="user-dropdown">
+        @if (Auth::check())
+        <div class="user-dropdown">
             <button class="btn btn-secondary" style="background-color: orange; color: white; border: 2px solid orange; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-            <?= $_SESSION['username']; ?> ▼
+                {{ Auth::user()->username }}  ▼
             </button>
-                <div class="dropdown-content">
-                <a href="edit_profil.php">Profiles</a>
-                    <a href="logout.php">Logout</a>
-                </div>
-            </div>
-        <?php else: ?>
-            <a href="login/index.php" class="btn btn-secondary">Login</a>
-        <?php endif; ?>
+        <div class="dropdown-content">
+            <a href="{{ route('user.profile.show', Auth::user()->id) }}">Profile</a>
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </div>
+        </div>
+        @else
+        <a href="login/index.php" class="btn btn-secondary">Login</a>
+    @endif
     </nav>
 </header>
 
@@ -120,7 +123,7 @@ $result = $conn->query($sql);
     <main class="artikel-container">      
     <h1 class="artikel-judul">{{ $artikel->judul }}</h1>
     <p class="artikel-tanggal">Dipublikasikan pada: {{ $artikel->tanggal }}</p>
-    <img src="{{ asset('storage/' . $artikel->gambar) }}" alt="{{ $artikel->judul }}"  class="artikel-gambar">
+    <img src="{{ asset($artikel->gambar) }}" alt="{{ $artikel->judul }}"  class="artikel-gambar">
     <article class="artikel-isi">
     <?php
     $paragraf = explode('.', $artikel->deskripsi); // Pisahkan berdasarkan titik
@@ -146,7 +149,7 @@ $result = $conn->query($sql);
      @foreach ($berita as $news )
      <div class="scroll-item">
         <a href="{{ route('admin.artikel.show', $news->id) }}">
-            <img src="{{ asset('storage/' . $news->gambar) }}" alt="{{ $news->judul }}">
+            <img src="{{ asset($news->gambar) }}" alt="{{ $news->judul }}">
             <p>{{ $news->judul }}</p>
             <span>{{ Str::limit($news->deskripsi, 100) }}...</span>
         </a>

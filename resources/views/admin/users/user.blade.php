@@ -117,19 +117,22 @@ if (isset($_GET['reset'])) {
         <a href="{{ route('admin.pengguna.index') }}">Kelola Akun Pengguna</a>
         <a href="{{ route('admin.artikel.index') }}">Kelola Artikel</a>
 
-        <?php if (isset($_SESSION['username'])): ?>
-            <div class="user-dropdown">
+        @if (Auth::check())
+        <div class="user-dropdown">
             <button class="btn btn-secondary" style="background-color: orange; color: white; border: 2px solid orange; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-            <?= $_SESSION['username']; ?> ▼
+                {{ Auth::user()->username }}  ▼
             </button>
-                <div class="dropdown-content">
-                    <a href="edit_profil.php">Profiles</a>
-                    <a href="logout.php">Logout</a>
-                </div>
-            </div>
-        <?php else: ?>
-            <a href="login/index.php" class="btn btn-secondary">Login</a>
-        <?php endif; ?>
+        <div class="dropdown-content">
+            <a href="{{ route('user.profile.show', Auth::user()->id) }}">Profile</a>
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </div>
+        </div>
+        @else
+        <a href="login/index.php" class="btn btn-secondary">Login</a>
+    @endif
     </nav>
 </header>
 
@@ -137,7 +140,16 @@ if (isset($_GET['reset'])) {
 <div class="table-container">
     <br><br><br>
     <h2 class="big-title" style="color: white;">Kelola Akun Pengguna</h2>
-    
+    <form method="GET" action="{{ route('admin.pengguna.index') }}" class="mb-3">
+        <label for="per_page" style="color: white;">Tampilkan:</label>
+        <select name="per_page" id="per_page" class="form-select" style="width: 150px;" onchange="this.form.submit()">
+
+            <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5</option>
+            <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+            <option value="15" {{ request('per_page') == 15 ? 'selected' : '' }}>15</option>
+            <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>
+        </select>
+    </form>
     <!-- Tombol Tambah Artikel -->
     <a href="{{ route('admin.pengguna.create') }}" class="btn btn-primary mb-3" class="btn btn-secondary" style="background-color: orange; color: white; border: 2px solid orange; padding: 10px 15px; border-radius: 5px; cursor: pointer;">Tambah User</a>
     <table class="table table-bordered shadow" style="background-color: rgba(255, 255, 255, 0.2); border-radius: 10px; overflow: hidden;">
@@ -152,7 +164,7 @@ if (isset($_GET['reset'])) {
             </tr>
         </thead>
         <tbody>
-            @foreach ($pengguna as $user )
+            @foreach ($hasilUser as $user )
             <tr>
                 <td>{{ $user->id }}</td>
                 <td>{{ $user->username }}</td>

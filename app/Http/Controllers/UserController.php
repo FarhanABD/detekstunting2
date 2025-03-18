@@ -12,8 +12,10 @@ class UserController extends Controller
     {
         // Ambil artikel terbaru
         $artikels = Artikel::orderBy('tanggal', 'desc')->get();
-        $berita = $artikels->first(); // Ambil satu artikel terbaru
+        $berita = $artikels->first(); // Ambil artikel terbaru
+        
         $user = Auth::user();
+        
     
         return view('user.dashboard', compact('artikels', 'user', 'berita'));
     }

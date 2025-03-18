@@ -140,21 +140,20 @@
             <a href="{{ route('user.deteksi.show', Auth::user()->id) }}">Riwayat Deteksi</a>
             <a href="{{ route('user.artikel', ['id' => $berita->id]) }}">Artikel</a>
 
-            @auth
-            <div class="user-dropdown">
-                <button class="btn btn-secondary"
-                    style="background-color: orange; color: white; border: 2px solid orange; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-                    {{ Auth::user()->name }} ▼
-                </button>
-                <div class="dropdown-content">
-                    <a href="{{ route('profile.edit') }}">Profil</a>
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </div>
-            </div>
-            @else
+            @if (Auth::check())
+        <div class="user-dropdown">
+            <button class="btn btn-secondary" style="background-color: orange; color: white; border: 2px solid orange; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+                {{ Auth::user()->nama_lengkap }}  ▼
+            </button>
+        <div class="dropdown-content">
+            <a href="{{ route('user.profile.show', Auth::user()->id) }}">Profile</a>
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </div>
+        </div>
+        @else
             <a href="{{ route('login') }}" class="btn btn-secondary">Login</a>
             @endauth
         </nav>

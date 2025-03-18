@@ -130,19 +130,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <a href="{{ route('admin.pengguna.index') }}">Kelola Akun Pengguna</a>
         <a href="{{ route('admin.artikel.index') }}">Kelola Artikel</a>
 
-        <?php if (isset($_SESSION['username'])): ?>
+        @if (Auth::check())
             <div class="user-dropdown">
-            <button class="btn btn-secondary" style="background-color: orange; color: white; border: 2px solid orange; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-            <?= $_SESSION['username']; ?> ▼
-            </button>
-                <div class="dropdown-content">
-                    <a href="edit_profil.php">Profiles</a>
-                    <a href="logout.php">Logout</a>
-                </div>
+                <button class="btn btn-secondary" style="background-color: orange; color: white; border: 2px solid orange; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+                    {{ Auth::user()->username }}  ▼
+                </button>
+            <div class="dropdown-content">
+                <a href="{{ route('user.profile.show', Auth::user()->id) }}">Profile</a>
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
-        <?php else: ?>
+            </div>
+            @else
             <a href="login/index.php" class="btn btn-secondary">Login</a>
-        <?php endif; ?>
+        @endif
     </nav>
 </header>
 

@@ -110,30 +110,44 @@ $result = $stmt->get_result();
     <nav class="nav-menu">
         <a href="{{ route('user.dashboard') }}">Beranda</a>
         <a href="{{ route('user.deteksi.index') }}">Deteksi Stunting</a>
-        <a href="riwayatdetek.php">Riwayat Deteksi</a>
+        <a href="{{ route('user.deteksi.show', Auth::user()->id) }}">Riwayat Deteksi</a>
         <a href="{{ route('user.artikel', ['id' => $berita->id]) }}">Artikel</a>
 
-        <?php if (isset($_SESSION['username'])): ?>
-            <div class="user-dropdown">
+        @if (Auth::check())
+        <div class="user-dropdown">
             <button class="btn btn-secondary" style="background-color: orange; color: white; border: 2px solid orange; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-            <?= $_SESSION['username']; ?> ▼
+                {{ Auth::user()->username }}  ▼
             </button>
-                <div class="dropdown-content">
-                    <a href="edit_profil.php">Profiles</a>
-                    <a href="logout.php">Logout</a>
-                </div>
-            </div>
-        <?php else: ?>
-            <a href="login/index.php" class="btn btn-secondary">Login</a>
-        <?php endif; ?>
+        <div class="dropdown-content">
+            <a href="{{ route('user.profile.show', Auth::user()->id) }}">Profile</a>
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </div>
+        </div>
+        @else
+        <a href="login/index.php" class="btn btn-secondary">Login</a>
+    @endif
     </nav>
 </header>
 <div class="container mt-4">
 <div class="table-container">
 <br><br><br>
 <h2 class="big-title" style="color: white;">Riwayat Deteksi Dini</h2><br>
+<div style="margin-bottom: 10px;">
+    <form method="GET" action="{{ route('user.deteksi.show', Auth::id()) }}" class="d-flex align-items-center">
+        <label for="per_page" class="me-2" style="color: white;">Tampilkan:</label>
+        <select name="per_page" id="per_page" class="form-select" style="width: 150px;" onchange="this.form.submit()">
+            <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5</option>
+            <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+            <option value="15" {{ request('per_page') == 15 ? 'selected' : '' }}>15</option>
+            <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>
+        </select>
+    </form>
+</div>
 
-    <table class="table table-bordered shadow" style="background-color: rgba(255, 255, 255, 0.2); border-radius: 10px; overflow: hidden;">
+<table class="table table-bordered shadow" style="background-color: rgba(255, 255, 255, 0.2); border-radius: 10px; overflow: hidden;">
     <thead class="table-dark">
         <tr>
             <th>No</th>
@@ -151,26 +165,40 @@ $result = $stmt->get_result();
         </tr>
     </thead>
     <tbody>
-        @foreach ($riwayatDetek as $riwayat )
-        <tr>
-           
-            <td>{{ $loop->iteration}}</td>
-            <td>{{ $riwayat->nama_lengkap }}</td>
-            <td>{{ $riwayat->kategori_usia }}</td>
-            <td>{{ $riwayat->kategori_lila }}</td>
-            <td>{{ $riwayat->kategori_tb }}</td>
-            <td>{{ $riwayat->kategori_anak }}</td>
-            <td>{{ $riwayat->kategori_ttd }}</td>
-            <td>{{ $riwayat->kategori_anc }}</td>
-            <td>{{ $riwayat->kategori_td }}</td>
-            <td>{{ $riwayat->kategori_hb }}</td>
-            <td><strong>{{ $riwayat->hasil_deteksi }}</strong></td>
-            <td>{{ $riwayat->created_at->format('d M Y, H:i') }}</td>
-         
-        </tr>
+        @foreach ($hasilRiwayat as $index => $riwayat)
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $riwayat->nama_lengkap }}</td>
+                <td>{{ $riwayat->kategori_usia }}</td>
+                <td>{{ $riwayat->kategori_lila }}</td>
+                <td>{{ $riwayat->kategori_tb }}</td>
+                <td>{{ $riwayat->kategori_anak }}</td>
+                <td>{{ $riwayat->kategori_ttd }}</td>
+                <td>{{ $riwayat->kategori_anc }}</td>
+                <td>{{ $riwayat->kategori_td }}</td>
+                <td>{{ $riwayat->kategori_hb }}</td>
+                <td><strong>{{ $riwayat->hasil_deteksi }}</strong></td>
+                <td>{{ $riwayat->created_at->format('d M Y, H:i') }}</td>
+            </tr>
         @endforeach
     </tbody>
 </table>
+<div class="mt-3 d-flex justify-content-center">
+    @if ($hasilRiwayat->previousPageUrl())
+        <a href="{{ $hasilRiwayat->previousPageUrl() }}&per_page={{ request('per_page') }}" 
+            class="btn btn-primary me-2">
+            ← Sebelumnya
+        </a>
+    @endif
+
+    @if ($hasilRiwayat->nextPageUrl())
+        <a href="{{ $hasilRiwayat->nextPageUrl() }}&per_page={{ request('per_page') }}" 
+            class="btn btn-primary">
+            Selanjutnya →
+        </a>
+    @endif
+</div>
+
 </div></div><br><br><br>
 
     <!-- FOOTER -->

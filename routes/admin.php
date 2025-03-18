@@ -15,9 +15,17 @@ Route::resource('artikel', ArtikelController::class);
 
 // pengguna route
 Route::post('/pengguna/reset/{id}', [PenggunaController::class, 'reset'])->name('pengguna.reset');
+Route::get('/hasilDeteksi/user/{user_id}', [HasilDeteksiController::class, 'show'])
+    ->name('hasilDeteksi.show');
+
 Route::resource('pengguna', PenggunaController::class);
 
 // deteksi route
+Route::get('/hasilDeteksi/export-pdf/{user_id}', [HasilDeteksiController::class, 'exportPDF'])
+    ->name('hasilDeteksi.exportPDF');
+
+Route::get('/hasilDeteksi/export/{user_id}', [HasilDeteksiController::class, 'exportExcel'])
+    ->name('hasilDeteksi.export');
 Route::get('/hasilDeteksi/{id}', [HasilDeteksiController::class, 'show'])->name('hasilDeteksi.show');
 Route::resource('hasilDeteksi', HasilDeteksiController::class);
 
