@@ -95,7 +95,7 @@ $result = $conn->query($sql);
     <nav class="nav-menu">
             <a href="{{ route('dashboard') }}">Beranda</a>
             <a href="{{ route('admin.auth.login') }}">Deteksi Stunting</a>
-            <a href="#artikel">Artikel</a>
+            <a href="{{ route('dashboard') }}">Artikel</a>
             <a href="{{ route('admin.auth.login') }}" class="btn btn-secondary">Login</a>
         </nav>
 </header>
@@ -130,7 +130,7 @@ $result = $conn->query($sql);
             <div class="scroll-container">
                 @foreach ($berita as $artikel )
                 <div class="scroll-item">
-                    <a href="{{ route('artikel', $artikel->id) }}">
+                    <a href="{{ route('artikel.showUnlogin', $artikel->id) }}">
                         <img src="{{ asset($artikel->gambar) }}" alt="{{ $artikel->judul }}">
                             <p>{{ $artikel->judul }}</p>
                             <span>{{ Str::limit($artikel->deskripsi, 100) }}...</span>

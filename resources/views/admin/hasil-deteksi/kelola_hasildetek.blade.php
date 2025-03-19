@@ -103,7 +103,7 @@ $result = $conn->query($query);
                     {{ Auth::user()->username }}  ▼
                 </button>
             <div class="dropdown-content">
-                <a href="{{ route('user.profile.show', Auth::user()->id) }}">Profile</a>
+                <a href="{{ route('admin.profile.show', Auth::user()->id) }}">Profile</a>
                 <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf

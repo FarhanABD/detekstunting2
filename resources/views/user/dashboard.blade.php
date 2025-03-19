@@ -28,8 +28,8 @@ $result = $conn->query($sql);
     <nav class="nav-menu">
         <a href="#main">Beranda</a>
         <a href="{{ route('user.deteksi.index') }}">Deteksi Stunting</a>
-        <a href="{{ route('user.deteksi.show', Auth::user()->id) }}">Riwayat Deteksi</a>
-        <a href="{{ route('user.artikel.showUser', $berita->id) }}">Artikel</a>
+        <a href="{{ route('user.deteksi.showUser', Auth::user()->id) }}">Riwayat Deteksi</a>
+        <a href="#artikel">Artikel</a>
 
 
         @if (Auth::check())

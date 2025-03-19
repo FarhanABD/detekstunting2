@@ -60,6 +60,26 @@ class HasilDeteksiController extends Controller
         return view('admin.hasil-deteksi.riwayat_user', compact('hasilDeteksi'));
     }
 
+    public function showUser($user_id, Request $request)
+    {
+        $hasilDeteksi = Deteksi::where('user_id', $user_id)->get();
+        $perPage = $request->input('per_page', 5);
+        $hasilRiwayat = Deteksi::where('user_id', $user_id)
+     ->whereIn('id', function ($query) {
+         $query->selectRaw('MAX(id)')
+               ->from('riwayat_deteksi')
+               ->groupBy('id');
+     })
+     ->orderBy('id', 'asc') // Urutkan dari yang terbaru
+     ->paginate($perPage);
+    
+        if ($hasilDeteksi->isEmpty()) {
+            return redirect()->route('user.deteksi.index')->with('error', 'Riwayat tidak ditemukan');
+        }
+    
+        return view('user.riwayat-deteksi.riwayatdetek', compact('hasilDeteksi','hasilRiwayat'));
+    }
+
     public function exportExcel($user_id)
 {
     return Excel::download(new HasilDeteksiExport($user_id), 'riwayat_deteksi.xlsx');

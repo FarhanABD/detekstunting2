@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 Route::get('dashboard', [UserController::class, 'dashboard'])->name('dashboard');
 
 // deteksi
+Route::get('/deteksi/{id}', 'App\Http\Controllers\HasilDeteksiController@showUser')->name('deteksi.showUser');
 Route::resource('deteksi', DeteksiController::class);
 
 // artikel

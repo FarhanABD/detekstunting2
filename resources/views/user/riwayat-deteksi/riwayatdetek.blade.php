@@ -111,7 +111,7 @@ $result = $stmt->get_result();
         <a href="{{ route('user.dashboard') }}">Beranda</a>
         <a href="{{ route('user.deteksi.index') }}">Deteksi Stunting</a>
         <a href="{{ route('user.deteksi.show', Auth::user()->id) }}">Riwayat Deteksi</a>
-        <a href="{{ route('user.artikel', ['id' => $berita->id]) }}">Artikel</a>
+        <a href="{{ route('user.dashboard') }}#artikel">Artikel</a>
 
         @if (Auth::check())
         <div class="user-dropdown">

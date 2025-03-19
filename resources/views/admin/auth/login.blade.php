@@ -36,7 +36,7 @@
                     </div>
                 @endif
                 <div class="input-box">
-                    <input type="text" id="username" name="username" placeholder="Username" value="{{ old('username') }}" required>
+                    <input type="text" id="login_username" name="username" placeholder="Username" value="{{ old('username') }}" required>
                     <i class='bx bxs-user'></i>
                 </div>
                 <div class="input-box">
@@ -44,19 +44,18 @@
                     <i class='bx bx-hide' id="toggleLoginPassword"></i>
                 </div>
                 <div class="forgot-link">
-                    <a href="{{ route('password.request') }}">Lupa Password?</a>
+                    <a href="{{ route('reset-password') }}">Lupa Password?</a>
                 </div>
                 <button type="submit" class="btn">Login</button>
             </form>
         </div>
 
         <div class="form-box register">
-            <form action="{{ route('register') }}" method="POST">
-            <form action="" method="POST">
+            <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <h1>Pendaftaran Akun</h1>
                 <div class="input-box">
-                    <input type="text" name="username" id="username" value="" placeholder="Username" required>
+                    <input type="text" id="register_username" name="username" placeholder="Username" required>
                     <i class='bx bxs-user'></i>
                 </div>
                 <div class="input-box">

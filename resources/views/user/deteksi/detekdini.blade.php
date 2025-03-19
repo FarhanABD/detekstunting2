@@ -138,12 +138,12 @@
             <a href="{{ route('user.dashboard') }}">Beranda</a>
             <a href="">Deteksi Stunting</a>
             <a href="{{ route('user.deteksi.show', Auth::user()->id) }}">Riwayat Deteksi</a>
-            <a href="{{ route('user.artikel', ['id' => $berita->id]) }}">Artikel</a>
+            <a href="{{ route('user.dashboard')}}#artikel">Artikel</a>
 
             @if (Auth::check())
         <div class="user-dropdown">
             <button class="btn btn-secondary" style="background-color: orange; color: white; border: 2px solid orange; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-                {{ Auth::user()->nama_lengkap }}  ▼
+                {{ Auth::user()->username }}  ▼
             </button>
         <div class="dropdown-content">
             <a href="{{ route('user.profile.show', Auth::user()->id) }}">Profile</a>
@@ -264,7 +264,9 @@
         
             <div class="hasil-deteksi">
                 <h3 class="hasil-judul">Hasil Deteksi Stunting</h3>
-                <p><strong>Prediksi Kelahiran Anak Anda:</strong> <span class="{{ $warna }}">{{ $hasil_prediksi }}</span></p>
+                <p><strong>Prediksi Kelahiran Anak Anda:</strong> <span class="{{ $warna }}" style="  font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;">{{ $hasil_prediksi }}</span></p>
                 <p class="hasil-catatan">
                     <strong>NB:</strong> <em>Sistem DetekStunting dapat melakukan kesalahan dalam prediksi.</em> 
                     Hasil di atas hanya sebagai analisis awal. Selalu lakukan pemeriksaan kesehatan rutin 

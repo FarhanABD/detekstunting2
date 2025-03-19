@@ -65,7 +65,7 @@ $result = $conn->query($sql);
             <h2 class="big-title">SELAMAT DATANG <br> {{ Auth::user()->nama_lengkap }} </h2>
             <p class="desc">Lakukan update informasi secara berkala untuk layanan masyarakat yang lebih optimal</p>
             <div class="buttons">
-                <a href="kelola_hasildetek.php" class="btn btn-primary">Kelola Hasil Deteksi</a>
+                <a href="{{ route('admin.hasilDeteksi.index') }}" class="btn btn-primary">Kelola Hasil Deteksi</a>
                 <a href="#pengertian" class="btn btn-secondary">Pelajari Stunting</a>
             </div>
         </div>
@@ -100,8 +100,8 @@ $result = $conn->query($sql);
         <div class="scroll-container">
         @foreach ($artikels as $artikel )
         <div class="scroll-item">
-            {{-- <a href="artikel.php?id=<?= $row['id'] ?>"> --}}
-                    <img src="{{ asset('storage/images' . $artikel->gambar) }}" alt="{{ $artikel->judul }}">
+            <a href="{{ route('admin.artikel.show', $artikel->id) }}">
+                    <img src="{{ asset($artikel->gambar) }}" alt="{{ $artikel->judul }}">
                     <p>{{ $artikel->judul }}</p>
                     <span>{{ $artikel->deskripsi }}<span>
                 </a>

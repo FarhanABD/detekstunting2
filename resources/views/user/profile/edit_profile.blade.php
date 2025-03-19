@@ -128,21 +128,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <a href="{{ route('user.dashboard') }}">Beranda</a>
         <a href="{{ route('user.deteksi.index') }}">Deteksi Stunting</a>
         <a href="{{ route('user.deteksi.show', Auth::user()->id) }}') }}">Riwayat Deteksi</a>
-        <a href="{{ route('user.artikel', ['id' => $berita->id]) }}">Artikel</a>
+        <a href="{{ route('user.dashboard') }}#artikel">Artikel</a>
 
-        <?php if (isset($_SESSION['username'])): ?>
-            <div class="user-dropdown">
+        @if (Auth::check())
+        <div class="user-dropdown">
             <button class="btn btn-secondary" style="background-color: orange; color: white; border: 2px solid orange; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-            <?= $_SESSION['username']; ?> ▼
+                {{ Auth::user()->username }}  ▼
             </button>
-                <div class="dropdown-content">
-                    <a href="edit_profil.php">Profiles</a>
-                    <a href="logout.php">Logout</a>
-                </div>
-            </div>
-        <?php else: ?>
+        <div class="dropdown-content">
+            <a href="{{ route('user.profile.show', Auth::user()->id) }}">Profile</a>
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </div>
+        </div>
+        @else
             <a href="login/index.php" class="btn btn-secondary">Login</a>
-        <?php endif; ?>
+            @endauth
     </nav>
 </header>
 
@@ -180,7 +183,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <div class="input-box">
     <i class='bx bx-hide' id="togglePassword"></i> <!-- ID Sesuai -->
-    <input type="password" name="password" id="passwordInput" placeholder="Password Baru (Opsional)">
+    <input type="password" name="password" value="{{ $user->password }}" id="passwordInput" placeholder="Password Baru (Opsional)">
 </div>
 
 

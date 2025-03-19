@@ -34,6 +34,34 @@ class PenggunaController extends Controller
     return redirect()->back()->with('success', 'Password berhasil direset ke password123!');
 }
 
+public function Halamanreset(){
+    return view('resetPassword');
+}
+
+public function resetPassword(Request $request)
+{
+    $request->validate([
+        'nama_lengkap' => 'required|string',
+        'password_baru' => 'required|string|min:6',
+    ]);
+
+    $nama_lengkap = $request->nama_lengkap;
+    $password_baru = Hash::make($request->password_baru);
+
+    // Cek apakah pengguna ada di database
+    $user = User::where('nama_lengkap', $nama_lengkap)->first();
+    
+    if ($user) {
+        // Update password
+        $user->update(['password' => $password_baru]);
+
+        return redirect()->route('login')->with('success', 'Password berhasil direset! Silakan login dengan password baru.');
+    } else {
+        return redirect()->back()->with('error', 'Nama tidak ditemukan!');
+    }
+}
+
+
     
     public function create()
     {

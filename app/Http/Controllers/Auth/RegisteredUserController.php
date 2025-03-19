@@ -38,13 +38,25 @@ class RegisteredUserController extends Controller
             'username' => ['required'],
         ]);
 
-        $user = User::create([
-            'nama_lengkap' => $request->nama_lengkap,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'username' => $request->username,
-        ]);
+        // $user = User::create([
+        //     'nama_lengkap' => $request->nama_lengkap,
+        //     'email' => $request->email,
+        //     'password' => Hash::make($request->password),
+        //     'tanggal_lahir' => $request->tanggal_lahir,
+        //     'username' => $request->username,
+        // ]);
+        $user = new User();
+        $user->nama_lengkap = $request->nama_lengkap;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->tanggal_lahir = $request->tanggal_lahir;
+        $user->username = $request->username;
+        try {
+            $user->save();
+        } catch (\Exception $e) {
+            dd($e->getMessage()); // Cek error message
+        }
+        
 
         event(new Registered($user));
 
