@@ -1,0 +1,24 @@
+{
+    "version": 2,
+    "functions": {
+        "api/index.php": {
+            "runtime": "vercel-php@0.6.0"
+        }
+    },
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.php"
+        }
+    ],
+    "env": {
+        "APP_ENV": "production",
+        "APP_DEBUG": "true",
+        "APP_URL": "https://detekstunting.vercel.app"
+    },
+    "build": {
+        "command": "vite build",
+        "outputDirectory": "dist"
+    },
+    "outputDirectory": "public"
+}
